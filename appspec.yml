@@ -1,11 +1,18 @@
 version: 0.0
 os: linux
 files:
-  - source: /
-    destination: /var/www/react-app
-
+ - source: /
+destination: /tmp/react2-deploy
 hooks:
-  AfterInstall:
-    - location: scripts/install.sh
-      timeout: 300
-      runas: root
+ BeforeInstall:
+ - location: scripts/before_install.sh
+ timeout: 300
+ runas: ubuntu
+ AfterInstall:
+ - location: scripts/after_install.sh
+ timeout: 300
+ runas: ubuntu
+ApplicationStart:
+- location: scripts/application_start.sh
+  timeout: 300
+  runas: ubuntu
