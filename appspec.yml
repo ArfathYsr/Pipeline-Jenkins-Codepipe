@@ -5,7 +5,7 @@ files:
    destination: /tmp/react2-deploy
 hooks:
  BeforeInstall:
- - location: Scripts/before_install.sh
+ - location: Scripts/Before_install.sh
  timeout: 300
  runas: ubuntu
  AfterInstall:
@@ -13,6 +13,6 @@ hooks:
  timeout: 300
  runas: ubuntu
  ApplicationStart:
- - location: Scripts/application_start.sh
+ - location: Scripts/Application_start.sh
  timeout: 300
  runas: ubuntu
