@@ -1,13 +1,14 @@
 #!/bin/bash
-echo "Deploying React app to Apache2..."
+echo "Running ApplicationStart: deploying to Apache and restarting server..."
 
-# Clear existing Apache root content
-rm -rf /var/www/html/*
+BUILD_DIR="/home/ubuntu/react2/build"
+APACHE_ROOT="/var/www/html"
 
-# Copy new build to Apache root
-cp -r /home/ubuntu/react2/build/* /var/www/html/
+# Remove old files from Apache root
+rm -rf $APACHE_ROOT/*
 
-# Restart Apache
+# Copy new build files to Apache root
+cp -r $BUILD_DIR/* $APACHE_ROOT/
+
+# Restart Apache service
 systemctl restart apache2
-
-echo "Deployment complete. React app is live on Apache2."
