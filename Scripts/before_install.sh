@@ -1,4 +1,4 @@
- #!/bin/bash
+#!/bin/bash
 mkdir -p /tmp/react2-deploy
 chown -R ubuntu:ubuntu /tmp/react2-deploy
 echo "Running BeforeInstall: cleaning old deployment directory..."
