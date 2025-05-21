@@ -1,4 +1,4 @@
-#!/bin/bash
+ #!/bin/bash
 echo "Cleaning old deployment..."
 shopt -s dotglob
 rm -rf /home/ubuntu/react2/*
