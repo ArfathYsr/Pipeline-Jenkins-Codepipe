@@ -1,0 +1,45 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - npm install
+  build:
+    commands:
+      - npm run build
+      # Create required files for CodeDeploy
+      - |
+        echo "version: 0.0
+        os: linux
+        files:
+          - source: /
+            destination: /home/ubuntu/react2/
+        hooks:
+          AfterInstall:
+            - location: scripts/after_install.sh
+              timeout: 300
+              runas: root
+          ApplicationStart:
+            - location: scripts/application_start.sh
+              timeout: 300
+              runas: root" > appspec.yml
+      - mkdir -p scripts
+      - |
+        echo "#!/bin/bash
+        echo 'Installing and building app...'
+        cp -r /tmp/react2-deploy/* /home/ubuntu/react2/
+        cd /home/ubuntu/react2
+        npm install
+        npm run build" > scripts/after_install.sh
+      - |
+        echo "#!/bin/bash
+        echo 'Deploying React app to Apache2...'
+        rm -rf /var/www/html/*
+        cp -r /home/ubuntu/react2/build/* /var/www/html/
+        systemctl restart apache2" > scripts/application_start.sh
+      - chmod +x scripts/*.sh
+artifacts:
+  files:
+    - '**/*'
